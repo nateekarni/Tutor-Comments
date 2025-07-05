@@ -8,21 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentListView = document.getElementById('comment-list-view');
     const detailView = document.getElementById('detail-view');
     const mainFooter = document.getElementById('main-footer');
-
-    // Calendar elements
     const monthYearDisplay = document.getElementById('month-year-display');
     const calendarGrid = document.getElementById('calendar-grid');
     const prevMonthBtn = document.getElementById('prev-month-btn');
     const nextMonthBtn = document.getElementById('next-month-btn');
     const calendarDetails = document.getElementById('calendar-details');
-
-    // Navigation buttons
     const showCalendarBtn = document.getElementById('show-calendar-btn');
     const showCommentsBtn = document.getElementById('show-comments-btn');
 
     let studentData = [];
     let currentStudentName = '';
     let currentDate = new Date();
+    // --- KEY CHANGE 1: เพิ่มตัวแปรสำหรับจำหน้าล่าสุด ---
+    let lastActiveView = 'calendar'; // เริ่มต้นที่หน้าปฏิทิน
 
     function getStudentNameFromURL() {
         const params = new URLSearchParams(window.location.search);
@@ -60,21 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalTime = columns[4]?.trim();
             const newDate = columns[5]?.trim();
             const newTime = columns[6]?.trim();
-
             const item = {
                 classId: columns[0]?.trim(),
                 student: columns[1]?.trim(),
                 studentId: columns[2]?.trim(),
                 date: originalDate,
                 time: originalTime,
-                topic: columns[8]?.trim(),
-                score: columns[9]?.trim(),
-                subject: columns[10]?.trim(),
+                subject: columns[8]?.trim(),
+                topic: columns[9]?.trim(),
+                score: columns[10]?.trim(),
                 comment: columns[11]?.trim().replace(/"/g, ''),
                 newDate: newDate,
                 newTime: newTime,
                 reason: columns[7]?.trim(),
-                // สร้างข้อมูลหลักที่จะใช้แสดงผล
                 effectiveDate: (newDate && newDate.trim() !== '') ? newDate : originalDate,
                 effectiveTime: (newTime && newTime.trim() !== '') ? newTime : originalTime,
             };
@@ -82,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }).filter(row => row.student && row.date);
     }
 
-    // --- RENDER FUNCTIONS ---
     function renderCalendar() {
         calendarGrid.innerHTML = '';
         calendarDetails.innerHTML = '';
@@ -112,11 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarDetails.innerHTML = '';
         if (classesOnDate.length > 0) {
             classesOnDate.forEach(item => {
-                calendarDetails.innerHTML += `<div class="card"><h3>${item.topic}</h3><p>วิชา: ${item.subject} | เวลา: ${item.effectiveTime}</p></div>`;
+                const cardEl = document.createElement('div');
+                cardEl.className = 'card-list';
+                cardEl.innerHTML = `<h3>${item.topic}</h3><p>วิชา: ${item.subject} | เวลา: ${item.effectiveTime}</p>`;
+                cardEl.addEventListener('click', () => renderDetailView(item.classId));
+                calendarDetails.appendChild(cardEl);
             });
         }
     }
-
 
     function renderCommentListView() {
         commentListView.innerHTML = '';
@@ -130,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
             acc[key].push(item);
             return acc;
         }, {});
-
         for (const monthKey in groupedByMonth) {
             const itemsInMonth = groupedByMonth[monthKey];
             const headerDate = new Date(itemsInMonth[0].effectiveDate);
@@ -139,99 +136,67 @@ document.addEventListener('DOMContentLoaded', () => {
             monthHeader.className = 'month-header';
             monthHeader.textContent = monthName;
             commentListView.appendChild(monthHeader);
-
             itemsInMonth.forEach(item => {
                 const thaiDate = new Date(item.effectiveDate).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
                 const listItem = document.createElement('div');
-                listItem.className = 'card';
+                listItem.className = 'card-list';
                 listItem.dataset.classId = item.classId;
-                 listItem.innerHTML = `
-                    <div class="comment-card">
-                    <h3>${item.topic}</h3>
-                    <p>${item.subject}</p>
-                    </div>
-                    <p>${thaiDate} เวลา ${item.effectiveTime || 'N/A'}</p>
-                `;
+                listItem.innerHTML = `<div class="comment-card"><h4>${item.topic}</h4><p>${item.subject}</p></div><p>${thaiDate} เวลา ${item.effectiveTime || 'N/A'}</p>`;
                 listItem.addEventListener('click', () => renderDetailView(item.classId));
                 commentListView.appendChild(listItem);
             });
         }
     }
 
+    // --- KEY CHANGE 3: อัปเดตฟังก์ชันปุ่ม "กลับ" ---
     function renderDetailView(classId) {
         const item = studentData.find(d => d.classId === classId);
         if (!item) return;
-        
         let rescheduleHtml = '';
-
         if (item.newDate && item.newDate.trim() !== '') {
             const originalFullDate = new Date(item.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
-            const newFullDate = new Date(item.newDate).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
-            
-            rescheduleHtml = `
-                <div class="reschedule-info">
-                    <p>
-                        <strong>(มีการเลื่อนเรียน)</strong><br>
-                        <strong>วันที่เรียน:</strong> ${originalFullDate} เวลา ${item.time} <br>
-                        <strong>เลื่อนเป็น:</strong> ${newFullDate} เวลา ${item.newTime} <br>
-                        <strong>เหตุผล:</strong> ${item.reason || 'ไม่ได้ระบุ'}
-                    </p>
-                </div>
-            `;
+            rescheduleHtml = `<div class="reschedule-info"><div class="reschedule-title"><strong>เลื่อนวันเรียน</strong></div><p><strong>วันที่เดิม :</strong> ${originalFullDate} เวลา ${item.time} <br><strong>เหตุผล :</strong> ${item.reason || 'ไม่ได้ระบุ'}</p></div>`;
         }
-
-        // Hide main views and footer
         calendarView.classList.add('hidden');
         commentListView.classList.add('hidden');
         mainFooter.classList.add('hidden');
-        
-        // Show detail view
         detailView.classList.remove('hidden');
         headerTitle.textContent = `รายละเอียดการเรียน`;
-
         const thaiDate = new Date(item.effectiveDate).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
-        detailView.innerHTML = `
-            <button class="back-btn"> &lt; กลับไปหน้ารายการ</button>
-            <div class="card">
-                <h2>${item.topic}</h2>
-                ${rescheduleHtml}
-                <div class="meta">
-                    <p><strong>วันที่:</strong> ${thaiDate}</p>
-                    <p><strong>เวลา:</strong> ${item.effectiveTime || 'N/A'}</p>
-                    <p><strong>วิชา:</strong> ${item.subject}</p>
-                </div>
-                <p><strong>คะแนน:</strong> ${item.score || 'ไม่มีคะแนน'}</p>
-                <p><strong>คอมเมนต์จากผู้สอน:</strong></p>
-                <p>${item.comment || 'ไม่มีคอมเมนต์'}</p>
-            </div>`;
-            
+        detailView.innerHTML = `<button class="back-btn"> &lt; กลับ</button><div class="card"><h2>${item.topic}</h2>${rescheduleHtml}<div class="meta"><p><strong>วันที่:</strong> ${thaiDate}</p><p><strong>เวลา:</strong> ${item.effectiveTime || 'N/A'}</p><p><strong>วิชา:</strong> ${item.subject}</p></div><p><strong>คะแนน:</strong> ${item.score || 'ไม่มีคะแนน'}</p><p><strong>คอมเมนต์จากผู้สอน:</strong></p><p>${item.comment || 'ไม่มีคอมเมนต์'}</p></div>`;
+        
         detailView.querySelector('.back-btn').addEventListener('click', () => {
-            // Hide detail view
             detailView.classList.add('hidden');
-            // Show comment list and footer
-            commentListView.classList.remove('hidden');
             mainFooter.classList.remove('hidden');
-            // Reset header title
             headerTitle.textContent = `สรุปผลการเรียน - น้อง${currentStudentName}`;
+
+            // ตรวจสอบค่า lastActiveView เพื่อกลับไปหน้าที่ถูกต้อง
+            if (lastActiveView === 'calendar') {
+                calendarView.classList.remove('hidden');
+            } else { // 'comments'
+                commentListView.classList.remove('hidden');
+            }
         });
         window.scrollTo(0, 0);
     }
     
-    // --- EVENT LISTENERS ---
+    // --- KEY CHANGE 2: อัปเดต Event Listeners ของเมนู ---
     function setupEventListeners() {
         showCalendarBtn.addEventListener('click', () => {
+            lastActiveView = 'calendar'; // จำว่าหน้าล่าสุดคือ ปฏิทิน
             calendarView.classList.remove('hidden');
             commentListView.classList.add('hidden');
-            detailView.classList.add('hidden'); // Ensure detail is hidden
+            detailView.classList.add('hidden');
             mainFooter.classList.remove('hidden');
             showCalendarBtn.classList.add('active');
             showCommentsBtn.classList.remove('active');
         });
 
         showCommentsBtn.addEventListener('click', () => {
+            lastActiveView = 'comments'; // จำว่าหน้าล่าสุดคือ คอมเมนต์
             calendarView.classList.add('hidden');
             commentListView.classList.remove('hidden');
-            detailView.classList.add('hidden'); // Ensure detail is hidden
+            detailView.classList.add('hidden');
             mainFooter.classList.remove('hidden');
             showCalendarBtn.classList.remove('active');
             showCommentsBtn.classList.add('active');
@@ -248,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- INITIAL LOAD ---
     currentStudentName = getStudentNameFromURL();
     if (currentStudentName) {
         fetchDataAndRender();

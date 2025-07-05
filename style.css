@@ -1,52 +1,76 @@
 /* General Styling */
 :root {
-    --primary-color: #3b82f6;
-    --background-color: #f8f9fa;
-    --text-color: #333;
-    --light-gray: #e9ecef;
-    --white: #fff;
+  --primary-color: #3b82f6;
+  --background-color: #f8f9fa;
+  --text-color: #333;
+  --light-gray: #e9ecef;
+  --white: #fff;
 }
 
 body {
-    font-family: 'Sarabun', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding-bottom: 80px; /* Space for footer */
+  font-family: 'Sarabun', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding-bottom: 80px;
+  /* Space for footer */
 }
 
 main {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 header {
-    background-color: var(--white);
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid var(--light-gray);
+  background-color: var(--white);
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--light-gray);
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* ใส่ต่อท้ายไฟล์ style.css ได้เลย */
 .month-header {
-    font-size: 1.2em;
-    color: var(--text-color);
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--light-gray);
+  font-size: 1.2em;
+  color: var(--text-color);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--light-gray);
 }
 
 /* Card Style */
 .card {
-    background-color: var(--white);
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: solid 1px #E5E7EB;
+  border-radius: 8px;
+  gap: 8px;
+  padding: 1rem 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.card-list h4,
+h3,
+p {
+  padding: 0;
+  margin: 0;
 }
 
 .comment-card {
@@ -57,74 +81,173 @@ header {
 
 /* List Item Card Style */
 #comment-list-view .card {
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 #comment-list-view .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 #comment-list-view .card h3 {
-    margin-top: 0; margin-bottom: 0.5rem; font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1em;
 }
+
 #comment-list-view .card p {
-    margin: 0.2rem 0; font-size: 0.9em; color: #6c757d;
+  margin: 0.2rem 0;
+  font-size: 0.9em;
+  color: #6c757d;
 }
 
 
 /* Calendar Styling */
 #calendar-view {
-    max-width: 500px; margin: auto;
+  max-width: 500px;
+  margin: auto;
 }
+
 .calendar-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
+
 .calendar-header button {
-    background: none; border: 1px solid var(--light-gray); border-radius: 50%; width: 36px; height: 36px; cursor: pointer;
+  background: none;
+  border: 1px solid var(--light-gray);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
 }
-.calendar-grid-header, .calendar-grid {
-    display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 5px;
+
+.calendar-grid-header,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  gap: 5px;
 }
+
 .calendar-grid-header {
-    font-weight: bold; color: #6c757d; margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
 }
+
 .calendar-grid div {
-    padding: 0.5rem 0; border-radius: 50%; aspect-ratio: 1 / 1; display: flex; justify-content: center; align-items: center;
+  padding: 0.5rem 0.5rem;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .calendar-grid .day.has-class {
-    background-color: var(--primary-color); color: var(--white); font-weight: bold; cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-weight: bold;
+  cursor: pointer;
 }
+
 #calendar-details {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 /* Detail View Styling */
 #detail-view .card {
-    padding: 1.5rem;
+  padding: 1.5rem;
 }
+
 #detail-view h2 {
-    margin-top: 0;
+  margin-top: 0;
 }
+
 #detail-view p {
-    line-height: 1.6; font-size: 1.1em;
+  line-height: 1.6;
+  font-size: 1.1em;
 }
+
 #detail-view .meta {
-    font-size: 0.9em; color: #6c757d; border-bottom: 1px solid var(--light-gray); padding-bottom: 1rem; margin-bottom: 1rem;
+  font-size: 0.9em;
+  color: #6c757d;
+  border-bottom: 1px solid var(--light-gray);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
+
 .back-btn {
-    display: inline-block; background-color: var(--light-gray); color: var(--text-color); border: none; padding: 0.7rem 1.2rem; border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 1rem; cursor: pointer; margin-bottom: 1rem;
+  display: inline-block;
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 /* Footer Navigation */
 footer {
-    position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
+
 nav {
-    display: flex; justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
+
 nav button {
-    flex-grow: 1; background: none; border: none; padding: 0.8rem 0; font-size: 1rem; font-family: 'Sarabun', sans-serif; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #6c757d; border-top: 3px solid transparent;
+  flex-grow: 1;
+  background: none;
+  border: none;
+  padding: 0.8rem 0;
+  font-size: 1rem;
+  font-family: 'Sarabun', sans-serif;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #6c757d;
+  border-top: 3px solid transparent;
 }
+
 nav button.active {
-    color: var(--primary-color); border-top-color: var(--primary-color);
+  color: var(--primary-color);
+  border-top-color: var(--primary-color);
+}
+
+.reschedule-info {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 1em;
+  background-color: #F3F4F6;
+  border: solid 1px #E5E7EB;
+  color: #333;
+  font-size: 0.8rem;
+  margin-bottom: 24px;
+}
+
+.reschedule-info p {
+  padding: 0;
+  margin: 0;
+}
+
+.reschedule-title {
+  align-self: center;
+  font-size: 1rem;
 }
