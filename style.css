@@ -17,7 +17,38 @@ body {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 1rem;
+  margin: 0;
+}
+
+#detail-view {
+  width: 100%;
+}
+
+#comment-list-view {
+  width: 100%;
+}
+
+#calendar-view {
+  width: 100%;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  #detail-view {
+    width: 50%;
+  }
+
+  #comment-list-view {
+    width: 50%;
+  }
+
+  #calendar-view {
+    width: 30%;
+  }
 }
 
 header {
@@ -80,6 +111,10 @@ p {
 }
 
 /* List Item Card Style */
+#calendar-list-view {
+  width: 100%;
+}
+
 #comment-list-view .card {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -104,10 +139,6 @@ p {
 
 
 /* Calendar Styling */
-#calendar-view {
-  max-width: 500px;
-  margin: auto;
-}
 
 .calendar-header {
   display: flex;
@@ -160,6 +191,7 @@ p {
 }
 
 /* Detail View Styling */
+
 #detail-view .card {
   padding: 1.5rem;
 }
