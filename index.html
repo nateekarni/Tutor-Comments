@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปผลการเรียน</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1 id="header-title">สรุปผลการเรียน</h1>
+    </header>
+
+    <main>
+        <div id="calendar-view">
+            <div class="calendar-header">
+                <button id="prev-month-btn">&lt;</button>
+                <h2 id="month-year-display"></h2>
+                <button id="next-month-btn">&gt;</button>
+            </div>
+            <div class="calendar-grid-header">
+                <div>อา</div><div>จ</div><div>อ</div><div>พ</div><div>พฤ</div><div>ศ</div><div>ส</div>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+            <div id="calendar-details"></div>
+        </div>
+
+        <div id="comment-list-view" class="hidden">
+            </div>
+
+        <div id="detail-view" class="hidden">
+            </div>
+    </main>
+
+    <footer id="main-footer">
+        <nav>
+            <button id="show-calendar-btn" class="active">
+                <span>📅</span>
+                <span>ตารางเรียน</span>
+            </button>
+            <button id="show-comments-btn">
+                <span>📝</span>
+                <span>คอมเมนต์</span>
+            </button>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
