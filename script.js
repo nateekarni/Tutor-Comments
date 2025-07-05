@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             classesOnDate.forEach(item => {
                 const cardEl = document.createElement('div');
                 cardEl.className = 'card-list';
-                cardEl.innerHTML = `<h3>${item.topic}</h3><p>วิชา: ${item.subject} | เวลา: ${item.effectiveTime}</p>`;
+                cardEl.innerHTML = `<h3>${item.topic}</h3><p>วิชา : ${item.subject} | เวลา : ${item.effectiveTime}</p>`;
                 cardEl.addEventListener('click', () => renderDetailView(item.classId));
                 calendarDetails.appendChild(cardEl);
             });
