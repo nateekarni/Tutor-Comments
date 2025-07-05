@@ -283,3 +283,34 @@ nav button.active {
   align-self: center;
   font-size: 1rem;
 }
+
+/* Styling for Detail View Navigation */
+.detail-nav {
+    display: flex;
+    justify-content: space-between; /* จัดปุ่มให้อยู่คนละฝั่ง */
+    margin-top: 1rem;
+}
+
+.nav-btn {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.nav-btn:disabled {
+    background-color: var(--light-gray);
+    color: #aaa;
+    border-color: var(--light-gray);
+    cursor: not-allowed;
+}
