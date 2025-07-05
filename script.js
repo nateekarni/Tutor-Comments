@@ -212,11 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
         month: "short",
         year: "numeric",
       });
-      rescheduleHtml = `<div class="reschedule-info"><p><strong>(มีการเลื่อนเรียน)</strong><br>${originalFullDate} เวลา ${
-        item.time
-      } <br><strong>เลื่อนเป็น:</strong> ${newFullDate} เวลา ${
-        item.newTime
-      } <br><strong>เหตุผล:</strong> ${item.reason || "ไม่ได้ระบุ"}</p></div>`;
+      rescheduleHtml = `<div class="reschedule-info">
+      <div class="reschedule-title"><strong>เปลี่ยนวันเรียน</strong></div>
+      <p><strong>วันเรียนเดิม :</strong> ${originalFullDate} เวลา ${item.time} <br>
+      <strong>วันเรียนใหม่ :</strong> ${newFullDate} เวลา ${item.newTime} <br>
+      <strong>เหตุผล :</strong> ${item.reason || "ไม่ได้ระบุ"}</p></div>`;
     }
 
     // --- แสดงผล View และ Header (เหมือนเดิม) ---
