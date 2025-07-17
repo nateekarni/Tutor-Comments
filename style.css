@@ -7,15 +7,8 @@
   --white: #fff;
 }
 
-@font-face {
-  font-family: 'LineSeedSansTH';
-  src: url('/fonts/LINESeedSansTH_W_Rg.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
-  font-family: 'LineSeedSansTH';
+  font-family: 'Sarabun', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
   margin: 0;
