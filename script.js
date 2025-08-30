@@ -167,22 +167,25 @@ document.addEventListener("DOMContentLoaded", () => {
       monthHeader.textContent = monthName;
       commentListView.appendChild(monthHeader);
       itemsInMonth.forEach((item) => {
-        const thaiDate = new Date(item.effectiveDate).toLocaleDateString(
-          "th-TH",
-          { day: "numeric", month: "short", year: "numeric" }
-        );
-        const listItem = document.createElement("div");
-        listItem.className = "card-list";
-        listItem.dataset.classId = item.classId;
-        listItem.innerHTML = `<div class="comment-card"><h4>${
-          item.topic
-        }</h4><p>${item.subject}</p></div><p>${thaiDate} เวลา ${
-          item.effectiveTime || "N/A"
-        }</p>`;
-        listItem.addEventListener("click", () =>
-          renderDetailView(item.classId)
-        );
-        commentListView.appendChild(listItem);
+        if (item.topic) {
+          // Check if there is a topic
+          const thaiDate = new Date(item.effectiveDate).toLocaleDateString(
+            "th-TH",
+            { day: "numeric", month: "short", year: "numeric" }
+          );
+          const listItem = document.createElement("div");
+          listItem.className = "card-list";
+          listItem.dataset.classId = item.classId;
+          listItem.innerHTML = `<div class="comment-card"><h4>${
+            item.topic
+          }</h4><p>${item.subject}</p></div><p>${thaiDate} เวลา ${
+            item.effectiveTime || "N/A"
+          }</p>`;
+          listItem.addEventListener("click", () =>
+            renderDetailView(item.classId)
+          );
+          commentListView.appendChild(listItem);
+        }
       });
     }
   }
@@ -214,7 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       rescheduleHtml = `<div class="reschedule-info">
       <div class="reschedule-title"><strong>เปลี่ยนวันเรียน</strong></div>
-      <p><strong>วันเรียนเดิม :</strong> ${originalFullDate} เวลา ${item.time} <br>
+      <p><strong>วันเรียนเดิม :</strong> ${originalFullDate} เวลา ${
+        item.time
+      } <br>
       <strong>วันเรียนใหม่ :</strong> ${newFullDate} เวลา ${item.newTime} <br>
       <strong>เหตุผล :</strong> ${item.reason || "ไม่ได้ระบุ"}</p></div>`;
     }
